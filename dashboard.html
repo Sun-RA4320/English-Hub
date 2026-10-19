@@ -643,7 +643,7 @@
     ============================================================ -->
     <nav class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <img src="./EnHub-logo.jpeg" alt="English Hub logo" id="logo-img">
+            <img src="EnHub-logo.jpeg" alt="English Hub logo" id="logo-img">
             <span class="sidebar-logo">English <span>Hub</span></span>
             <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
                 <i class="bx bx-chevron-right"></i>
@@ -652,8 +652,7 @@
 
         <div class="sidebar-search">
             <i class="bx bx-search"></i>
-            <input id="dictInput" type="search" placeholder="Dictionary..."
-                   onkeydown="if(event.key==='Enter'){event.preventDefault();lookupWord();}">
+            <input id="dictInput" type="search" placeholder="Dictionary...">
         </div>
 
         <div class="sidebar-nav">
@@ -895,6 +894,13 @@
         document.getElementById('dict-popup').style.display = 'none';
         document.getElementById('dictInput').value = '';
     }
+
+    document.getElementById('dictInput').addEventListener('keydown', e => {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            lookupWord();
+        }
+    });
 
     document.addEventListener('click', function(e) {
         const popup = document.getElementById('dict-popup');
