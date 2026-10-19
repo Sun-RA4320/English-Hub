@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>English Hub – Lesson</title>
+
+    <style>
+        :root {
+            --body-color:           #E4E9F7;
+            --primary-color:        #695CFE;
+            --primary-color-light:  #F6F5FF;
+            --text-color:           #707070;
+            --text-dark:            #0D1B3E;
+            --navy:                 #0D1B3E;
+            --card-bg:              #FFFFFF;
+            --border-color:         #F3F4F6;
+            --success-color:        #22C55E;
+            --error-color:          #EF4444;
+        }
+
+        body.dark {
+            --body-color:           #080602;
+            --primary-color:        #C4A04B;
+            --primary-color-light:  rgba(196,160,75,0.1);
+            --text-color:           #8888A0;
+            --text-dark:            #E8C878;
+            --navy:                 #E8E0D0;
+            --card-bg:              #1A1608;
+            --border-color:         rgba(196,160,75,0.12);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            background: var(--body-color);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .lesson-wrap { width: 100%; max-width: 640px; }
+
+        .lesson-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .back-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+        }
+
+        .lesson-title {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--navy);
+            text-align: center;
+        }
+
+        .exercise-subtitle {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-color);
+            margin-bottom: 16px;
+        }
+
+        .progress-bar-outer {
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.4s ease;
+            border-radius: 20px;
+        }
+
+        .exercise-nav {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .exercise-pill {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--card-bg);
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .exercise-pill:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .exercise-pill.active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .exercise-pill.visited {
+            background: rgba(34,197,94,0.15);
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .exercise-pill.active.visited {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+
+        .exercise-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px 28px;
+            text-align: center;
+        }
+
+        .exercise-instruction {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-bottom: 6px;
+        }
+
+        .exercise-hint {
+            font-size: 13px;
+            color: var(--primary-color);
+            font-style: italic;
+            margin-bottom: 24px;
+            min-height: 18px;
+        }
+
+        .prompt-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .speaker-tag {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .answer-slot-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            min-height: 52px;
+            padding: 12px;
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 28px;
+        }
+
+        .word-chip {
+            background: var(--primary-color-light);
+            color: var(--navy);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            user-select: none;
+        }
+
+        .word-chip:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.08); }
+        .word-chip.placed { background: var(--primary-color); color: white; }
+
+        .qcm-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+
+        .qcm-option {
+            background: var(--primary-color-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 18px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--navy);
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.15s ease;
+        }
+
+        .qcm-option:hover { border-color: var(--primary-color); }
+        .qcm-option.selected { border-color: var(--primary-color); background: var(--primary-color); color: white; }
+
+        .assoc-grid { display: flex; gap: 24px; justify-content: center; margin-bottom: 24px; }
+        .assoc-col { display: flex; flex-direction: column; gap: 8px; }
+
+        .assoc-chip {
+            background: var(--primary-color-light);
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--navy);
+            cursor: pointer;
+            min-width: 120px;
+            transition: all 0.15s ease;
+        }
+
+        .assoc-chip.selected { border-color: var(--primary-color); background: var(--primary-color); color: white; }
+        .assoc-chip.matched { border-color: var(--success-color); background: rgba(34,197,94,0.12); cursor: default; opacity: 0.7; }
+
+        .blank-input {
+            border: none;
+            border-bottom: 2px solid var(--primary-color);
+            background: transparent;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            width: 110px;
+            padding: 2px 6px;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .blank-input:focus { outline: none; }
+
+        .production-textarea {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: var(--text-dark);
+            background: var(--body-color);
+            resize: vertical;
+            margin-bottom: 16px;
+        }
+
+        .criteria-list { text-align: left; font-size: 13px; color: var(--text-color); margin-bottom: 20px; padding-left: 18px; }
+        .criteria-list li { margin-bottom: 4px; }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-primary:hover { filter: brightness(1.1); }
+        .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .btn-secondary { background: transparent; color: var(--text-color); border: 2px solid var(--border-color); }
+        .btn-secondary:hover { border-color: var(--primary-color); color: var(--primary-color); }
+
+        .pronounce-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 16px;
+            margin-bottom: 8px;
+        }
+
+        .pronounce-btn {
+            background: rgba(105,92,254,0.08);
+            border: 1.5px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 30px;
+            padding: 8px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        body.dark .pronounce-btn { background: rgba(196,160,75,0.1); }
+
+        .pronounce-btn:hover { background: var(--primary-color); color: white; transform: translateY(-1px); }
+
+        .clickable-word {
+            cursor: pointer;
+            transition: color 0.15s ease;
+        }
+
+        .clickable-word:hover {
+            text-decoration: underline dotted;
+            text-underline-offset: 3px;
+        }
+
+        .feedback-banner {
+            margin-top: 18px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            display: none;
+            text-align: left;
+        }
+
+        .feedback-banner.correct { display: block; background: rgba(34,197,94,0.12); color: var(--success-color); }
+        .feedback-banner.incorrect { display: block; background: rgba(239,68,68,0.12); color: var(--error-color); }
+
+        .result-screen { text-align: center; display: none; }
+        .result-screen.active { display: block; }
+        .result-score { font-family: 'Cinzel', serif; font-size: 48px; font-weight: 700; color: var(--primary-color); margin: 16px 0; }
+        .result-message { color: var(--text-color); margin-bottom: 24px; }
+
+        .result-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .vocab-section {
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            text-align: left;
+        }
+
+        .vocab-section h3 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .vocab-list { list-style: none; padding: 0; }
+
+        .vocab-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background: var(--primary-color-light);
+            margin-bottom: 6px;
+        }
+
+        .vocab-en {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .vocab-en:hover { text-decoration: underline; }
+
+        .vocab-fr {
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .loading-state, .error-state { text-align: center; color: var(--text-color); padding: 40px 0; }
+    </style>
+</head>
+<body>
+
+<div class="lesson-wrap">
+    <div class="lesson-header">
+        <a href="dashboard.html" class="back-link"><i class="bx bx-arrow-back"></i></a>
+        <span style="width:22px;"></span>
+    </div>
+    <div class="lesson-title" id="lessonTitle">Loading…</div>
+    <div class="exercise-subtitle" id="exerciseSubtitle"></div>
+
+    <div class="progress-bar-outer"><div class="progress-bar-inner" id="progressBarInner"></div></div>
+
+    <div class="exercise-nav" id="exerciseNav"></div>
+
+    <div id="loadingState" class="loading-state">Chargement de l'exercice…</div>
+    <div id="errorState" class="error-state" style="display:none;"></div>
+
+    <div class="exercise-card" id="exerciseCard" style="display:none;">
+        <div class="exercise-instruction" id="exerciseInstruction"></div>
+        <div class="exercise-hint" id="exerciseHint"></div>
+        <div id="exerciseBody"></div>
+        <button class="btn btn-primary" id="checkBtn">Vérifier</button>
+        <div class="feedback-banner" id="feedbackBanner"></div>
+    </div>
+
+    <div class="exercise-card result-screen" id="resultScreen">
+        <div class="lesson-title">Module terminé !</div>
+        <div class="result-score" id="resultScore">0%</div>
+        <div class="result-message" id="resultMessage"></div>
+
+        <div class="vocab-section" id="vocabSection" style="display:none;">
+            <h3>📚 Mots appris dans ce module</h3>
+            <ul class="vocab-list" id="vocabList"></ul>
+        </div>
+
+        <div class="result-actions" style="margin-top:24px;">
+            <button class="btn btn-secondary" onclick="window.location.href='dashboard.html'">Retour au tableau de bord</button>
+            <button class="btn btn-primary" id="nextLessonBtn" style="display:none;">Leçon suivante →</button>
+        </div>
+    </div>
+</div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const SUPABASE_URL = 'https://kkhcwcevcohpntxsiirq.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_af0eX5Yf1HeYSzZq0-RFZQ_0a-6WL_8';
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+if (localStorage.getItem('eh_dark') === 'true') document.body.classList.add('dark');
+
+/* ============================================================
+   SPEECH SYNTHESIS — API Web Speech (gratuite, intégrée)
+   ============================================================ */
+let _voiceReady = false;
+let _enVoice = null;
+
+function refreshVoices() {
+    const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+    _enVoice = voices.find(v => v.lang.startsWith('en-US'))
+            || voices.find(v => v.lang.startsWith('en'))
+            || null;
+    _voiceReady = true;
+}
+
+if (window.speechSynthesis) {
+    refreshVoices();
+    window.speechSynthesis.onvoiceschanged = refreshVoices;
+}
+
+function speak(text, rate = 1, lang = 'en-US') {
+    if (!window.speechSynthesis) {
+        console.warn('Speech synthesis non supportée par ce navigateur.');
+        return;
+    }
+    if (!_voiceReady) refreshVoices();
+
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang;
+    u.rate = rate;
+    u.pitch = 1;
+    u.volume = 1;
+    if (_enVoice) u.voice = _enVoice;
+    window.speechSynthesis.speak(u);
+}
+
+// Écouteur global : tout élément avec la classe .clickable-word se prononce au clic.
+document.addEventListener('click', (e) => {
+    const el = e.target.closest('.clickable-word');
+    if (!el) return;
+    const word = (el.dataset.word || el.textContent || '').trim();
+    if (word) speak(word, 1);
+});
+
+/* ============================================================ */
+
+const params = new URLSearchParams(window.location.search);
+const moduleId = params.get('module');
+
+let currentUserId = null;
+let currentParcours = null;
+let exercises = [];
+let exerciseIdx = 0;
+let stepIdx = 0;
+let currentSteps = [];
+
+let gradedSteps = new Map();
+let visitedExercises = new Set();
+
+let slots = [];
+let bank = [];
+let assocSelectedEn = null;
+let assocMatched = new Set();
+let qcmSelection = null;
+
+let lessonTotalSteps = 0;
+
+let levelModuleIds = [];
+let levelModulesOrdered = [];
+let levelCompletedBefore = 0;
+
+let awaitingNext = false;
+
+async function getCurrentUser() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+        window.location.href = 'login.html';
+        return null;
+    }
+    const user = session.user;
+
+    const { data: existingProfile } = await supabase
+        .from('profiles').select('id').eq('id', user.id).maybeSingle();
+    if (!existingProfile) {
+        await supabase.from('profiles').insert({
+            id: user.id, pseudo: 'Apprenant', endurance: 5, streak: 0, xp: 0
+        });
+    }
+
+    return user.id;
+}
+
+async function loadLevelProgress() {
+    const { data: thisModule } = await supabase
+        .from('modules')
+        .select('parcours, niveau')
+        .eq('module_id', moduleId)
+        .single();
+
+    if (!thisModule) { return; }
+
+    currentParcours = thisModule.parcours;
+
+    const { data: levelModules } = await supabase
+        .from('modules')
+        .select('module_id')
+        .eq('parcours', thisModule.parcours)
+        .eq('niveau', thisModule.niveau)
+        .order('order_index', { ascending: true });
+
+    levelModulesOrdered = (levelModules || []).map(m => m.module_id);
+    levelModuleIds = levelModulesOrdered;
+
+    if (!currentUserId || levelModuleIds.length === 0) { return; }
+
+    const { data: progressRows } = await supabase
+        .from('user_progress')
+        .select('module_id, completed')
+        .eq('user_id', currentUserId)
+        .in('module_id', levelModuleIds)
+        .eq('completed', true);
+
+    levelCompletedBefore = (progressRows || []).length;
+}
+
+function setProgressBar(completed, total) {
+    const pct = total ? Math.round((completed / total) * 100) : 0;
+    document.getElementById('progressBarInner').style.width = pct + '%';
+}
+
+function computeLessonProgress() {
+    let completed = 0;
+    for (let i = 0; i < exerciseIdx; i++) {
+        completed += normalizeSteps(exercises[i]).length;
+    }
+    completed += stepIdx;
+    return completed;
+}
+
+async function loadExercise() {
+    if (!moduleId) { showError("Aucun module spécifié dans l'URL."); return; }
+
+    await loadLevelProgress();
+
+    const { data, error } = await supabase
+        .from('exercises')
+        .select('id, titre, consigne_fr, content, type')
+        .eq('module_id', moduleId)
+        .order('id', { ascending: true });
+
+    document.getElementById('loadingState').style.display = 'none';
+
+    if (error || !data || data.length === 0) {
+        showError('En cours de développement — cet exercice n\'est pas encore disponible.');
+        return;
+    }
+
+    exercises = data;
+    lessonTotalSteps = exercises.reduce((sum, ex) => sum + normalizeSteps(ex).length, 0);
+    setProgressBar(0, lessonTotalSteps);
+
+    document.getElementById('lessonTitle').textContent = moduleId;
+    document.getElementById('exerciseCard').style.display = 'block';
+
+    renderExerciseNav();
+    loadCurrentExercise();
+}
+
+function showError(msg) {
+    document.getElementById('loadingState').style.display = 'none';
+    document.getElementById('errorState').style.display = 'block';
+    document.getElementById('errorState').textContent = msg;
+}
+
+function renderExerciseNav() {
+    const nav = document.getElementById('exerciseNav');
+    nav.innerHTML = exercises.map((ex, i) => {
+        const label = 'E' + (i + 1);
+        const classes = ['exercise-pill'];
+        if (i === exerciseIdx) classes.push('active');
+        if (visitedExercises.has(i)) classes.push('visited');
+        return `<div class="${classes.join(' ')}" data-exidx="${i}" title="${ex.titre || ''}">${label}</div>`;
+    }).join('');
+
+    nav.querySelectorAll('.exercise-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+            const targetIdx = parseInt(pill.dataset.exidx, 10);
+            if (targetIdx === exerciseIdx) return;
+            jumpToExercise(targetIdx);
+        });
+    });
+}
+
+function jumpToExercise(targetIdx) {
+    if (targetIdx < 0 || targetIdx >= exercises.length) return;
+    exerciseIdx = targetIdx;
+    stepIdx = 0;
+    visitedExercises.add(exerciseIdx);
+    renderExerciseNav();
+    loadCurrentExercise();
+}
+
+function loadCurrentExercise() {
+    const ex = exercises[exerciseIdx];
+    if (!ex) { finishModule(); return; }
+
+    document.getElementById('exerciseSubtitle').textContent =
+        `${ex.titre} (${exerciseIdx + 1}/${exercises.length})`;
+    document.getElementById('exerciseInstruction').textContent = ex.consigne_fr || '';
+
+    currentSteps = normalizeSteps(ex);
+    stepIdx = 0;
+
+    if (currentSteps.length === 0) {
+        visitedExercises.add(exerciseIdx);
+        exerciseIdx++;
+        if (exerciseIdx < exercises.length) {
+            renderExerciseNav();
+            loadCurrentExercise();
+        } else {
+            renderExerciseNav();
+            finishModule();
+        }
+        return;
+    }
+
+    renderStep();
+}
+
+function normalizeSteps(ex) {
+    const c = ex.content;
+    switch (ex.type) {
+        case 'qcm':
+            return (c.items || []).map(it => ({
+                kind: 'qcm', prompt: it.phrase, options: it.options,
+                answer: it.reponse, feedback: it.feedback_fr
+            }));
+        case 'ordre':
+            if (c.sentences) {
+                return c.sentences.map(s => ({
+                    kind: 'ordre', shuffled: s.shuffled, correct: s.correct, hint: s.hint_fr
+                }));
+            }
+            return (c.items || []).map(it => ({
+                kind: 'ordre', shuffled: it.mots_melanges, correct: it.phrase_correcte.split(' ')
+            }));
+        case 'association':
+            return (c.paires && c.paires.length) ? [{ kind: 'association', paires: c.paires }] : [];
+        case 'trou':
+            return (c.dialogue || []).map(d => ({
+                kind: 'trou', texte: d.texte, answer: d.reponse, speaker: d.locuteur
+            }));
+        case 'production':
+            return [{ kind: 'production', modele: c.modele, criteres: c.criteres_correction }];
+        default:
+            return [];
+    }
+}
+
+function renderStep() {
+    document.getElementById('feedbackBanner').className = 'feedback-banner';
+    document.getElementById('feedbackBanner').textContent = '';
+
+    const step = currentSteps[stepIdx];
+    if (!step) return;
+
+    setProgressBar(computeLessonProgress(), lessonTotalSteps);
+    document.getElementById('exerciseHint').textContent = step.hint || '';
+
+    const body = document.getElementById('exerciseBody');
+    const checkBtn = document.getElementById('checkBtn');
+    checkBtn.style.display = 'inline-block';
+    checkBtn.disabled = false;
+    checkBtn.textContent = 'Vérifier';
+    awaitingNext = false;
+
+    if (step.kind === 'ordre') renderOrdre(step, body);
+    else if (step.kind === 'qcm') renderQcm(step, body);
+    else if (step.kind === 'association') renderAssociation(step, body);
+    else if (step.kind === 'trou') renderTrou(step, body);
+    else if (step.kind === 'production') renderProduction(step, body, checkBtn);
+}
+
+function shuffleArr(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+/* ---------- ORDRE ---------- */
+function renderOrdre(step, body) {
+    slots = [];
+    bank = shuffleArr(step.shuffled.map((w, i) => ({ word: w, key: i + '-' + w })));
+    body.innerHTML = `<div class="answer-slot-row" id="answerSlotRow"></div><div class="word-bank" id="wordBank"></div>`;
+    renderOrdreUI();
+}
+
+function renderOrdreUI() {
+    const slotRow = document.getElementById('answerSlotRow');
+    const bankEl = document.getElementById('wordBank');
+
+    slotRow.innerHTML = slots.map(item =>
+        `<span class="word-chip placed clickable-word" data-word="${item.word}">${item.word}</span>`
+    ).join('') || '<span style="color:var(--text-color);font-size:13px;">Clique sur les mots ci-dessous</span>';
+
+    bankEl.innerHTML = bank.map(item =>
+        `<span class="word-chip clickable-word" data-key="${item.key}" data-word="${item.word}">${item.word}</span>`
+    ).join('');
+
+    bankEl.querySelectorAll('.word-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+            const idx = bank.findIndex(w => w.key === chip.dataset.key);
+            if (idx === -1) return;
+            slots.push(bank[idx]);
+            bank.splice(idx, 1);
+            renderOrdreUI();
+        });
+    });
+
+    slotRow.querySelectorAll('.word-chip').forEach((chip, i) => {
+        chip.addEventListener('click', () => {
+            bank.push(slots[i]);
+            slots.splice(i, 1);
+            renderOrdreUI();
+        });
+    });
+}
+
+function normalizeWord(w) {
+    return w.trim().toLowerCase().replace(/[.,!?;:]+$/, '');
+}
+
+function checkOrdre(step) {
+    const attempt = slots.map(item => normalizeWord(item.word));
+    const correct = step.correct.map(normalizeWord);
+    return JSON.stringify(attempt) === JSON.stringify(correct);
+}
+
+/* ---------- QCM ---------- */
+function renderQcm(step, body) {
+    qcmSelection = null;
+    body.innerHTML = `
+        <div class="prompt-text">${step.prompt}</div>
+        <div class="qcm-options" id="qcmOptions">
+            ${step.options.map(opt =>
+                `<button class="qcm-option clickable-word" data-opt="${opt}" data-word="${opt}">${opt}</button>`
+            ).join('')}
+        </div>`;
+    body.querySelectorAll('.qcm-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+            body.querySelectorAll('.qcm-option').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            qcmSelection = btn.dataset.opt;
+        });
+    });
+}
+
+function checkQcm(step) { return qcmSelection === step.answer; }
+
+/* ---------- ASSOCIATION ---------- */
+function renderAssociation(step, body) {
+    assocSelectedEn = null;
+    assocMatched = new Set();
+    const enWords = shuffleArr(step.paires.map(p => p.en));
+    const frWords = shuffleArr(step.paires.map(p => p.fr));
+
+    body.innerHTML = `
+        <div class="assoc-grid">
+            <div class="assoc-col">${enWords.map(w =>
+                `<div class="assoc-chip clickable-word" data-en="${w}" data-word="${w}">${w}</div>`
+            ).join('')}</div>
+            <div class="assoc-col">${frWords.map(w =>
+                `<div class="assoc-chip" data-fr="${w}">${w}</div>`
+            ).join('')}</div>
+        </div>`;
+
+    body.querySelectorAll('[data-en]').forEach(chip => {
+        chip.addEventListener('click', () => {
+            if (assocMatched.has('en:' + chip.dataset.en)) return;
+            body.querySelectorAll('[data-en]').forEach(c => c.classList.remove('selected'));
+            chip.classList.add('selected');
+            assocSelectedEn = chip.dataset.en;
+        });
+    });
+
+    body.querySelectorAll('[data-fr]').forEach(chip => {
+        chip.addEventListener('click', () => {
+            if (!assocSelectedEn || assocMatched.has('fr:' + chip.dataset.fr)) return;
+            const pair = step.paires.find(p => p.en === assocSelectedEn);
+            const enChip = body.querySelector(`[data-en="${assocSelectedEn}"]`);
+            if (pair.fr === chip.dataset.fr) {
+                chip.classList.add('matched');
+                enChip.classList.add('matched');
+                assocMatched.add('fr:' + chip.dataset.fr);
+                assocMatched.add('en:' + assocSelectedEn);
+            } else {
+                chip.style.background = 'rgba(239,68,68,0.12)';
+                setTimeout(() => { chip.style.background = ''; }, 500);
+            }
+            assocSelectedEn = null;
+            body.querySelectorAll('[data-en]').forEach(c => c.classList.remove('selected'));
+        });
+    });
+}
+
+function checkAssociation(step) { return assocMatched.size === step.paires.length * 2; }
+
+/* ---------- TROU (avec Pronounce) ---------- */
+function renderTrou(step, body) {
+    const parts = step.texte.split('___');
+    body.innerHTML = `
+        <div class="speaker-tag">${step.speaker}</div>
+        <div class="prompt-text">${parts[0]}<input type="text" class="blank-input" id="trouInput" autocomplete="off">${parts[1] || ''}</div>
+        <div class="pronounce-row" id="trouPronounceRow" style="display:none;">
+            <button type="button" class="pronounce-btn" id="trouPronounceBtn">🔊 Pronounce</button>
+            <button type="button" class="pronounce-btn" id="trouPronounceSlowBtn">🐢 Slow</button>
+        </div>`;
+}
+
+function checkTrou(step) {
+    const val = (document.getElementById('trouInput')?.value || '').trim().toLowerCase();
+    return val === step.answer.trim().toLowerCase();
+}
+
+function revealTrouPronounce(step) {
+    const row = document.getElementById('trouPronounceRow');
+    if (!row) return;
+    row.style.display = 'flex';
+    const full = step.texte.replace('___', step.answer);
+    document.getElementById('trouPronounceBtn').onclick = () => speak(full, 1);
+    document.getElementById('trouPronounceSlowBtn').onclick = () => speak(full, 0.6);
+}
+
+/* ---------- PRODUCTION (avec Pronounce sur le modèle) ---------- */
+function renderProduction(step, body, checkBtn) {
+    body.innerHTML = `
+        <div class="prompt-text">${step.modele}</div>
+        <div class="pronounce-row">
+            <button type="button" class="pronounce-btn" id="prodPronounceBtn">🔊 Pronounce</button>
+            <button type="button" class="pronounce-btn" id="prodPronounceSlowBtn">🐢 Slow</button>
+        </div>
+        <textarea class="production-textarea" id="productionInput" placeholder="Écris ta réponse ici..."></textarea>
+        <ul class="criteria-list">${(step.criteres || []).map(c => `<li>${c}</li>`).join('')}</ul>`;
+    checkBtn.textContent = "J'ai terminé";
+
+    document.getElementById('prodPronounceBtn').onclick = () => speak(step.modele, 1);
+    document.getElementById('prodPronounceSlowBtn').onclick = () => speak(step.modele, 0.6);
+}
+
+/* ---------- NAVIGATION ---------- */
+function advanceStep() {
+    stepIdx++;
+    if (stepIdx < currentSteps.length) {
+        renderStep();
+    } else {
+        visitedExercises.add(exerciseIdx);
+        exerciseIdx++;
+        if (exerciseIdx < exercises.length) {
+            visitedExercises.add(exerciseIdx);
+            renderExerciseNav();
+            loadCurrentExercise();
+        } else {
+            renderExerciseNav();
+            finishModule();
+        }
+    }
+}
+
+document.getElementById('checkBtn').addEventListener('click', () => {
+    const step = currentSteps[stepIdx];
+    const checkBtn = document.getElementById('checkBtn');
+    const banner = document.getElementById('feedbackBanner');
+
+    if (step.kind === 'production') { advanceStep(); return; }
+
+    if (!awaitingNext) {
+        let isCorrect = null;
+        if (step.kind === 'ordre') isCorrect = checkOrdre(step);
+        else if (step.kind === 'qcm') isCorrect = checkQcm(step);
+        else if (step.kind === 'association') isCorrect = checkAssociation(step);
+        else if (step.kind === 'trou') isCorrect = checkTrou(step);
+
+        if (isCorrect !== null) {
+            gradedSteps.set(`${exerciseIdx}:${stepIdx}`, isCorrect);
+
+            if (isCorrect) {
+                banner.className = 'feedback-banner correct';
+                banner.textContent = '✓ Correct !' + (step.feedback ? ' ' + step.feedback : '');
+            } else {
+                const correctAnswer = step.kind === 'ordre' ? step.correct.join(' ')
+                    : step.kind === 'qcm' ? step.answer
+                    : step.kind === 'trou' ? step.answer : '';
+                banner.className = 'feedback-banner incorrect';
+                banner.textContent = `✗ Pas tout à fait.` + (correctAnswer ? ` Réponse : ${correctAnswer}` : '') +
+                    (step.feedback ? ' ' + step.feedback : '');
+            }
+        }
+
+        // Révéler le bouton Pronounce pour les exercices "trou"
+        if (step.kind === 'trou') revealTrouPronounce(step);
+
+        awaitingNext = true;
+        checkBtn.textContent = 'Suivant →';
+    } else {
+        awaitingNext = false;
+        advanceStep();
+    }
+});
+
+/* ---------- FIN DE MODULE + VOCABULAIRE ---------- */
+async function finishModule() {
+    document.getElementById('exerciseCard').style.display = 'none';
+
+    let correct = 0;
+    gradedSteps.forEach(v => { if (v) correct++; });
+    const total = gradedSteps.size;
+    const scorePct = total ? Math.round((correct / total) * 100) : 100;
+    const passed = scorePct >= 80;
+    const stars = scorePct === 100 ? 3 : scorePct >= 80 ? 2 : scorePct >= 50 ? 1 : 0;
+
+    document.getElementById('resultScreen').classList.add('active');
+    document.getElementById('resultScore').textContent = scorePct + '%';
+    document.getElementById('resultMessage').textContent = passed
+        ? 'Module validé ! Bien joué.'
+        : 'Pas encore validé (il faut 80%+). Retente ce module.';
+
+    if (currentUserId) {
+        const { error: progressError } = await supabase.from('user_progress').upsert({
+            user_id: currentUserId,
+            module_id: moduleId,
+            completed: passed,
+            score_pct: scorePct,
+            stars: stars,
+            attempts: 1,
+            completed_at: passed ? new Date().toISOString() : null
+        }, { onConflict: 'user_id,module_id' });
+
+        if (progressError) {
+            console.error('Échec de sauvegarde de la progression:', progressError);
+            document.getElementById('resultMessage').textContent += ' (⚠️ Sauvegarde échouée)';
+        }
+
+        if (passed) {
+            const { data: profile } = await supabase.from('profiles').select('xp').eq('id', currentUserId).single();
+            const newXp = (profile?.xp || 0) + 50;
+            await supabase.from('profiles').update({ xp: newXp }).eq('id', currentUserId);
+        }
+    }
+
+    // Charger et afficher le vocabulaire du module
+    try {
+        const { data: mod } = await supabase
+            .from('modules')
+            .select('vocabulary')
+            .eq('module_id', moduleId)
+            .single();
+
+        const vocab = mod?.vocabulary;
+        if (Array.isArray(vocab) && vocab.length > 0) {
+            const section = document.getElementById('vocabSection');
+            const list = document.getElementById('vocabList');
+            list.innerHTML = vocab.map(item => `
+                <li class="vocab-item">
+                    <span class="vocab-en clickable-word" data-word="${item.en}">${item.en}</span>
+                    <span class="vocab-fr">${item.fr}</span>
+                </li>
+            `).join('');
+            section.style.display = 'block';
+        }
+    } catch (e) {
+        console.warn('Impossible de charger le vocabulaire:', e);
+    }
+
+    if (passed) {
+        const currentIdx = levelModulesOrdered.indexOf(moduleId);
+        const nextModuleId = currentIdx !== -1 ? levelModulesOrdered[currentIdx + 1] : null;
+        if (nextModuleId) {
+            const nextBtn = document.getElementById('nextLessonBtn');
+            nextBtn.style.display = 'inline-block';
+            nextBtn.addEventListener('click', () => {
+                window.location.href = `lesson.html?module=${nextModuleId}`;
+            });
+        }
+    }
+}
+
+(async function init() {
+    currentUserId = await getCurrentUser();
+    await loadExercise();
+})();
+</script>
+
+</body>
+</html>

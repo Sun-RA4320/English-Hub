@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <title>English Hub – Settings</title>
+
+    <style>
+        :root {
+            --body-color:   #E4E9F7;
+            --card-bg:      #FFFFFF;
+            --text-color:   #707070;
+            --text-dark:    #0D1B3E;
+            --navy:         #0D1B3E;
+            --border-color: #F3F4F6;
+            --primary-color:#695CFE;
+            --primary-color-light: #F6F5FF;
+            --success-color:#22C55E;
+            --error-color:  #EF4444;
+            --danger-bg:    #4A1D1D;
+            --danger-bg-hover: #5C2424;
+            --danger-border: rgba(239,68,68,0.4);
+            --danger-text:  #F3D9D9;
+        }
+
+        body.dark {
+            --body-color:   #080602;
+            --card-bg:      #1A1608;
+            --text-color:   #8888A0;
+            --text-dark:    #E8C878;
+            --navy:         #E8E0D0;
+            --border-color: rgba(196,160,75,0.12);
+            --primary-color:#C4A04B;
+            --primary-color-light: rgba(196,160,75,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            background: var(--body-color);
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text-dark);
+        }
+
+        .top-bar { padding: 30px 40px 0; }
+
+        .back-link {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 22px;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 32px;
+            color: var(--navy);
+            padding: 10px 40px 0;
+        }
+
+        .settings-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 24px;
+            padding: 40px 20px;
+            min-height: calc(100vh - 120px);
+        }
+
+        .settings-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 32px 40px;
+            width: 100%;
+            max-width: 460px;
+        }
+
+        .settings-card h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 6px;
+        }
+
+        .settings-card p {
+            color: var(--text-color);
+            font-size: 13px;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .field { margin-bottom: 14px; }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--navy);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-dark);
+            background: var(--body-color);
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .btn-save {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 11px 28px;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: filter 0.15s ease;
+        }
+
+        .btn-save:hover { filter: brightness(1.1); }
+        .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .form-message {
+            margin-top: 12px;
+            font-size: 13px;
+            min-height: 18px;
+        }
+
+        .form-message.error { color: var(--error-color); }
+        .form-message.success { color: var(--success-color); }
+
+        .btn-logout {
+            background: var(--danger-bg);
+            border: 1px solid var(--danger-border);
+            color: var(--danger-text);
+            padding: 12px 32px;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.15s ease;
+        }
+
+        .btn-logout:hover { background: var(--danger-bg-hover); }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-box {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .modal-box h2 { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--navy); }
+        .modal-box p { color: var(--text-color); font-size: 14px; margin-bottom: 24px; }
+
+        .modal-box .btn-group { display: flex; gap: 10px; justify-content: center; }
+
+        .btn-cancel {
+            background: var(--border-color);
+            color: var(--navy);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar"><a href="dashboard.html" class="back-link"><i class="bx bx-arrow-back"></i></a></div>
+    <h1>Settings</h1>
+
+    <div class="settings-page">
+
+        <!-- ── Section 1 : Modifier mon pseudo ── -->
+        <div class="settings-card">
+            <h2>Mon profil</h2>
+            <p>Ton pseudo apparaît dans le classement. Tu peux le modifier à tout moment.</p>
+            <div class="field">
+                <label for="pseudoInput">Pseudo</label>
+                <input type="text" id="pseudoInput" maxlength="20" placeholder="Ton nom d'affichage">
+            </div>
+            <button class="btn-save" id="savePseudoBtn">Enregistrer</button>
+            <div class="form-message" id="pseudoMessage"></div>
+        </div>
+
+        <!-- ── Section 2 : Déconnexion ── -->
+        <div class="settings-card" style="text-align:center;">
+            <h2>Déconnexion</h2>
+            <p>Se déconnecter de ton compte English Hub.</p>
+            <button class="btn-logout" id="logoutBtn">Logout</button>
+        </div>
+
+    </div>
+
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-box">
+            <h2>Se déconnecter ?</h2>
+            <p>Tu devras te reconnecter pour accéder à ta progression.</p>
+            <div class="btn-group">
+                <button class="btn-cancel" id="cancelLogout">Annuler</button>
+                <button class="btn-logout" id="confirmLogout">Se déconnecter</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+        const SUPABASE_URL = 'https://kkhcwcevcohpntxsiirq.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_af0eX5Yf1HeYSzZq0-RFZQ_0a-6WL_8';
+        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        if (localStorage.getItem('eh_dark') === 'true') document.body.classList.add('dark');
+
+        const { data: { session } } = await supabase.auth.getSession();
+        if (!session) { window.location.href = 'login.html'; }
+
+        const userId = session.user.id;
+        const pseudoInput = document.getElementById('pseudoInput');
+        const pseudoMessage = document.getElementById('pseudoMessage');
+        const savePseudoBtn = document.getElementById('savePseudoBtn');
+
+        // ── Charger le pseudo actuel ──
+        const { data: profile, error: loadError } = await supabase
+            .from('profiles')
+            .select('pseudo')
+            .eq('id', userId)
+            .single();
+
+        if (loadError) {
+            pseudoMessage.textContent = 'Erreur de chargement du profil.';
+            pseudoMessage.className = 'form-message error';
+        } else {
+            pseudoInput.value = profile.pseudo || '';
+        }
+
+        // ── Sauvegarder le nouveau pseudo ──
+        savePseudoBtn.addEventListener('click', async () => {
+            const newPseudo = pseudoInput.value.trim();
+
+            if (!newPseudo) {
+                pseudoMessage.textContent = 'Le pseudo ne peut pas être vide.';
+                pseudoMessage.className = 'form-message error';
+                return;
+            }
+
+            if (newPseudo.length < 2) {
+                pseudoMessage.textContent = 'Le pseudo doit contenir au moins 2 caractères.';
+                pseudoMessage.className = 'form-message error';
+                return;
+            }
+
+            savePseudoBtn.disabled = true;
+            pseudoMessage.textContent = 'Enregistrement...';
+            pseudoMessage.className = 'form-message';
+
+            // Mise à jour de la table profiles (RLS garantit que seul le propriétaire peut le faire)
+            const { error: updateError } = await supabase
+                .from('profiles')
+                .update({ pseudo: newPseudo })
+                .eq('id', userId);
+
+            if (updateError) {
+                pseudoMessage.textContent = 'Erreur : ' + updateError.message;
+                pseudoMessage.className = 'form-message error';
+                savePseudoBtn.disabled = false;
+                return;
+            }
+
+            // Mise à jour aussi dans les metadata (pour cohérence)
+            await supabase.auth.updateUser({ data: { pseudo: newPseudo } });
+
+            pseudoMessage.textContent = '✅ Pseudo mis à jour !';
+            pseudoMessage.className = 'form-message success';
+            savePseudoBtn.disabled = false;
+        });
+
+        // ── Logout ──
+        const modal = document.getElementById('confirmModal');
+
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            modal.classList.add('active');
+        });
+
+        document.getElementById('cancelLogout').addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        document.getElementById('confirmLogout').addEventListener('click', async () => {
+            await supabase.auth.signOut();
+            window.location.href = 'login.html';
+        });
+    </script>
+
+</body>
+</html>
